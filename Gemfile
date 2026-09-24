@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 ruby '2.7.8'
-gem 'rails', '6.0.6.1'
+gem 'rails', '6.1.7.10'
 
 gem 'logger', '~> 1.4'
 
@@ -16,7 +16,7 @@ gem 'puma', '~> 6.4'
 # gem 'rabl'
 
 # ORM
-gem 'pg', '~> 0.21.0'
+gem 'pg', '~> 1.5.0'
 
 # Pagination
 # gem 'kaminari'
