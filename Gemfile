@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.2.11'
+ruby '3.3.12'
 gem 'rails', '7.1.6'
 
 gem 'logger', '~> 1.4'
