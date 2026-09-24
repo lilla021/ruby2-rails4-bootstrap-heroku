@@ -3,15 +3,15 @@
   "validationReceiptsRequired": true,
   "runId": "d51bc8ac-c06c-40fb-9f2d-dfb69dddeb15",
   "title": "Ruby migration to 3.4.10",
-  "status": "in_progress",
-  "phase": "hop_validated",
+  "status": "blocked",
+  "phase": "blocked",
   "startedAt": "2026-09-23T02:16:25.937Z",
   "targetRuby": "3.4.10",
   "targetPinnedAt": "2026-09-23T02:16:25.937Z",
   "branch": "ruby-upgrade/e2e-3.4",
   "worktreeRoot": "[LOCAL PATH]",
   "startingSha": "bad95e2be88687f5d185c29a2361526fa05b8f54",
-  "expectedHead": "e0fb0d2f7494d10cf22a73512efa1b7584bf89d0",
+  "expectedHead": "e8e1ce821033336c7ac68dc9082f595ff43453e5",
   "control": {
     "stopAfterHop": false
   },
@@ -96,7 +96,25 @@
   },
   "requiredRisks": [],
   "riskDecisions": [],
-  "frameworkBridge": null,
+  "frameworkBridge": {
+    "status": "approved",
+    "rubyFrom": "2.6.10",
+    "rubyTo": "2.7.8",
+    "railsFrom": "4.2.11.3",
+    "railsTo": "5.2.8.1",
+    "rationale": "Rails 4.2.11.3 calls BigDecimal.new, removed in Ruby 2.7; Rails 5.2 removes that boot-time incompatibility and must be reached through reviewed minor-series Rails hops.",
+    "citations": [
+      {
+        "title": "Rails upgrade guide",
+        "url": "https://guides.rubyonrails.org/upgrading_ruby_on_rails.html"
+      },
+      {
+        "title": "Rails 5.2.8.1 gemspec",
+        "url": "https://raw.githubusercontent.com/rails/rails/v5.2.8.1/rails.gemspec"
+      }
+    ],
+    "recordedAt": "2026-09-23T04:47:03.668Z"
+  },
   "summary": [
     "Run initialized; official-source research and compatibility ladder pending.",
     "Initial clean-tree gate: .ruby-upgrades/ is untracked after durable-run initialization. User review is required before first runtime preparation and Ruby 2.4.10 to 2.5.9 iteration.",
@@ -104,7 +122,11 @@
     "Paused after receipt-backed first-hop validation; no checkpoint created.",
     "Local receipt-backed Ruby 2.5.9 checkpoint created; no push performed.",
     "Ruby 2.6.10 Docker receipt passed; awaiting checkpoint review.",
-    "Paused after receipt-backed Ruby 2.6.10 validation; no second checkpoint created."
+    "Paused after receipt-backed Ruby 2.6.10 validation; no second checkpoint created.",
+    "Local receipt-backed Ruby 2.6.10 checkpoint created; no push performed.",
+    "Ruby 2.7.8 preparation blocked: Rails 4.2.11.3 calls removed BigDecimal.new during boot. Reverted unvalidated runtime declarations to checkpointed Ruby 2.6.10; Rails bridge decision required.",
+    "User approved a separately scoped Rails 4.2.11.3 → 5.2.8.1 bridge before Ruby 2.6.10 → 2.7.8.",
+    "Ruby 2.7.8 blocked by Rails 4.2 BigDecimal.new incompatibility; approved Rails 5.2 bridge will run separately."
   ],
   "iterations": [
     {
@@ -278,9 +300,10 @@
           }
         }
       ],
-      "status": "complete"
+      "status": "complete",
+      "checkpointSha": "e8e1ce821033336c7ac68dc9082f595ff43453e5"
     }
   ],
   "sessionSummary": "",
-  "lockNonce": "d92c1cff-a7de-4c7a-a20a-1b4cc7dc02e0"
+  "lockNonce": "58fb727e-3a45-410a-aa38-400093f2c953"
 }

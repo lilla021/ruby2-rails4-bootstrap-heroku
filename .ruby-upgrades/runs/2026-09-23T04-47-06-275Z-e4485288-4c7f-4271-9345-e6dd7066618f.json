@@ -4,15 +4,15 @@
   "reportType": "rails_bridge",
   "runId": "dcb1fe09-1c2c-47d3-b9cd-53abf523bcad",
   "title": "Rails bridge 4.2.11.3 to 5.2.8.1",
-  "status": "in_progress",
-  "phase": "hop_validated",
+  "status": "complete",
+  "phase": "complete",
   "startedAt": "2026-09-23T04:47:06.278Z",
   "targetRails": "5.2.8.1",
   "targetRailsPinnedAt": "2026-09-23T04:47:06.278Z",
   "branch": "ruby-upgrade/e2e-3.4",
   "worktreeRoot": "[LOCAL PATH]",
   "startingSha": "e8e1ce821033336c7ac68dc9082f595ff43453e5",
-  "expectedHead": "a7225de6a5daed2137da51277248ace2eced3872",
+  "expectedHead": "9cc80923ea7a08fcaa8bcf8cf627ca38a72324b5",
   "control": {
     "stopAfterHop": false
   },
@@ -105,7 +105,9 @@
     "Recorded dependency compatibility and license review for the validated hop.",
     "Guarded local Rails 5.1.7 checkpoint created; no push performed.",
     "Rails 5.2.8.1 app:update output reviewed; removed obsolete Rails 5.0 defaults; final Docker RSpec passed.",
-    "Recorded dependency compatibility and license review for the validated hop."
+    "Recorded dependency compatibility and license review for the validated hop.",
+    "Guarded local Rails 5.2.8.1 checkpoint created; no push performed.",
+    "Completed the approved Rails bridge at Rails 5.2.8.1 with three reviewed, receipt-backed checkpoints."
   ],
   "iterations": [
     {
@@ -600,7 +602,8 @@
         "compatibility": "Focused Rails resolution upgraded the 5.2 framework set, Active Storage, and required transitives; removing obsolete Rails 5.0 compatibility toggles restored boot, and final attested Docker RSpec passed.",
         "licenses": "Only the public Rubygems source is present. No newly identified incompatible license was found in the reviewed Rails 5.2 transitive delta; no automated license-audit adapter is configured, so this remains fixture-scoped review.",
         "reviewedAt": "2026-09-24T01:11:11.507Z"
-      }
+      },
+      "checkpointSha": "9cc80923ea7a08fcaa8bcf8cf627ca38a72324b5"
     }
   ],
   "sessionSummary": "",

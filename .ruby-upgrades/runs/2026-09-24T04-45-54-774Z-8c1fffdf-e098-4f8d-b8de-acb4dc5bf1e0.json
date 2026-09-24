@@ -3,15 +3,15 @@
   "validationReceiptsRequired": true,
   "runId": "2cedd40f-8746-4762-9a4d-4a5557877993",
   "title": "Ruby migration to 3.4.10",
-  "status": "in_progress",
-  "phase": "hop_validated",
+  "status": "complete",
+  "phase": "complete",
   "startedAt": "2026-09-24T04:45:54.777Z",
   "targetRuby": "3.4.10",
   "targetPinnedAt": "2026-09-24T04:45:54.777Z",
   "branch": "ruby-upgrade/e2e-3.4",
   "worktreeRoot": "[LOCAL PATH]",
   "startingSha": "1579d1073c2165c312ae3623642c104065864614",
-  "expectedHead": "8c30cf2149b700e5078dfcf4c2edbaad391f1a5b",
+  "expectedHead": "64c0b0b2bb7cb757d2d6fed18c9d404ee2df38f8",
   "control": {
     "stopAfterHop": false
   },
@@ -123,7 +123,9 @@
     "Recorded dependency compatibility and license review for the validated hop.",
     "Checkpoint for Ruby 3.3.12 hop committed.",
     "Final Ruby 3.4.10 hop validated; attested Docker RSpec passed.",
-    "Recorded dependency compatibility and license review for the validated hop."
+    "Recorded dependency compatibility and license review for the validated hop.",
+    "Checkpoint for final Ruby 3.4.10 hop committed.",
+    "E2E run complete: Ruby 2.7.8 -> 3.4.10 in 5 receipt-backed hops on Rails 7.1.6."
   ],
   "iterations": [
     {
@@ -563,7 +565,8 @@
         "compatibility": "Final Ruby hop 3.3.12 -> 3.4.10 adds observer ~> 0.1 (0.1.2) because Ruby 3.4 removed the observer default gem and factory_bot 5.2.0 evaluation requires it. Rails 7.1.6 and Bundler 2.4.22 unchanged. Attested Docker RSpec passed on the final target.",
         "licenses": "observer 0.1.2 (BSD-2-Clause / Ruby License dual) reviewed; no newly identified incompatible license. Rubygems-only source confirmed.",
         "reviewedAt": "2026-09-24T06:05:58.329Z"
-      }
+      },
+      "checkpointSha": "64c0b0b2bb7cb757d2d6fed18c9d404ee2df38f8"
     }
   ],
   "sessionSummary": "",

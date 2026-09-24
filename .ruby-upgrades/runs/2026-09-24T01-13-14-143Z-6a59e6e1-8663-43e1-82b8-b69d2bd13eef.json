@@ -3,15 +3,15 @@
   "validationReceiptsRequired": true,
   "runId": "8845e8c0-444a-48db-89e3-0d60daa12e9d",
   "title": "Ruby migration to 3.4",
-  "status": "in_progress",
-  "phase": "hop_validated",
+  "status": "blocked",
+  "phase": "blocked",
   "startedAt": "2026-09-24T01:13:14.158Z",
   "targetRuby": "3.4",
   "targetPinnedAt": "2026-09-24T01:13:14.158Z",
   "branch": "ruby-upgrade/e2e-3.4",
   "worktreeRoot": "[LOCAL PATH]",
   "startingSha": "9cc80923ea7a08fcaa8bcf8cf627ca38a72324b5",
-  "expectedHead": "9cc80923ea7a08fcaa8bcf8cf627ca38a72324b5",
+  "expectedHead": "ae71ee175ac0ce52cf45d638e87825d3190f1631",
   "control": {
     "stopAfterHop": false
   },
@@ -90,12 +90,37 @@
   },
   "requiredRisks": [],
   "riskDecisions": [],
-  "frameworkBridge": null,
+  "frameworkBridge": {
+    "status": "approved",
+    "rubyFrom": "2.7.8",
+    "rubyTo": "3.0.7",
+    "railsFrom": "5.2.8.1",
+    "railsTo": "7.1.6",
+    "rationale": "Rails 5.2.8.1 is the last 5.2 release and does not run under Ruby 3.0 (keyword-argument separation breaks ActionDispatch internals, reproduced at static.rb during test-database init). Bridge the fixture to Rails 7.1.6, the final 7.1 patch release, which supports Ruby >= 2.7 (runs on the current 2.7.8 runtime) and Ruby 3.x, before continuing the Ruby ladder to 3.4.10.",
+    "citations": [
+      {
+        "title": "Rails upgrade guide",
+        "url": "https://guides.rubyonrails.org/upgrading_ruby_on_rails.html"
+      },
+      {
+        "title": "Rails 7.1.6 release notes",
+        "url": "https://rubyonrails.org/2025/10/29/new-rails-releases-and-end-of-support-announcement"
+      },
+      {
+        "title": "ActionDispatch Static keyword argument failure",
+        "url": "https://github.com/rails/rails/issues/41476"
+      }
+    ],
+    "recordedAt": "2026-09-24T02:48:09.840Z"
+  },
   "summary": [
     "Run initialized; official-source research and compatibility ladder pending.",
     "Post-bridge inventory confirms Ruby 2.6.10 and Rails 5.2.8.1.",
     "Pinned the contiguous post-bridge Ruby ladder through Ruby 3.4.10.",
-    "Ruby 2.7.8 hop passed the attested Docker RSpec validation with receipt 6fbe3dc0-12e7-428f-a086-900678decb1b."
+    "Ruby 2.7.8 hop passed the attested Docker RSpec validation with receipt 6fbe3dc0-12e7-428f-a086-900678decb1b.",
+    "Checkpoint ae71ee17 created for the Ruby 2.7.8 hop at receipt digest b3481f92.",
+    "User approved a separately scoped Rails 5.2.8.1 → 7.1.6 bridge before Ruby 2.7.8 → 3.0.7.",
+    "Ruby 3.0.7 cannot run on Rails 5.2.8.1 (keyword-argument breakage in ActionDispatch::Static); Ruby run is terminal pending the approved Rails 5.2.8.1 -> 7.1.6 bridge."
   ],
   "iterations": [
     {
@@ -182,7 +207,8 @@
           }
         }
       ],
-      "status": "complete"
+      "status": "complete",
+      "checkpointSha": "ae71ee175ac0ce52cf45d638e87825d3190f1631"
     }
   ],
   "sessionSummary": "",
