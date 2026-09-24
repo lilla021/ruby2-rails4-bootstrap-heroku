@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.1.7'
+ruby '3.2.11'
 gem 'rails', '7.1.6'
 
 gem 'logger', '~> 1.4'
@@ -52,8 +52,8 @@ group :development, :test do
   gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', '~> 5.2'
   gem 'faker', '~> 2.2.1'
-  gem 'pry', '~> 0.13.1'
-  gem 'pry-byebug', '~> 3.9'
+  gem 'pry', '~> 0.14.2'
+  gem 'pry-byebug', '~> 3.10'
   gem 'pry-rails', '~> 0.3.9'
   gem 'rspec-rails', '~> 4.1'
   gem 'rubocop', '~> 1.12', require: false
