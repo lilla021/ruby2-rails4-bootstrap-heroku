@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.12'
+ruby '3.4.10'
 gem 'rails', '7.1.6'
 
 gem 'logger', '~> 1.4'
@@ -51,6 +51,7 @@ gem 'font-awesome-rails', '~> 4.7'
 group :development, :test do
   gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', '~> 5.2'
+  gem 'observer', '~> 0.1'
   gem 'faker', '~> 2.2.1'
   gem 'pry', '~> 0.14.2'
   gem 'pry-byebug', '~> 3.10'
