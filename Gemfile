@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.0.7'
+ruby '3.1.7'
 gem 'rails', '7.1.6'
 
 gem 'logger', '~> 1.4'
@@ -72,6 +72,7 @@ end
 
 group :test do
   gem 'capybara', '~> 3.32.0'
+  gem 'matrix', '~> 0.4'
   gem 'database_cleaner-active_record', '~> 2.1'
   gem 'email_spec', '~> 2.2'
   gem 'selenium-webdriver', '~> 3.142'
