@@ -12,7 +12,7 @@
   "branch": "ruby-upgrade/e2e-3.4",
   "worktreeRoot": "[LOCAL PATH]",
   "startingSha": "e8e1ce821033336c7ac68dc9082f595ff43453e5",
-  "expectedHead": "44f92460c11c05a4e907c9960cb65fbbe72debc5",
+  "expectedHead": "a7225de6a5daed2137da51277248ace2eced3872",
   "control": {
     "stopAfterHop": false
   },
@@ -102,6 +102,9 @@
     "Recorded dependency compatibility and license review for the validated hop.",
     "Guarded local Rails 5.0.7.2 checkpoint created; no push performed.",
     "Rails 5.1.7 app:update output reviewed; removed obsolete transaction callback setting; final Docker RSpec passed.",
+    "Recorded dependency compatibility and license review for the validated hop.",
+    "Guarded local Rails 5.1.7 checkpoint created; no push performed.",
+    "Rails 5.2.8.1 app:update output reviewed; removed obsolete Rails 5.0 defaults; final Docker RSpec passed.",
     "Recorded dependency compatibility and license review for the validated hop."
   ],
   "iterations": [
@@ -433,6 +436,170 @@
         "compatibility": "Focused Rails resolution upgraded the 5.1 framework set and required transitives; removing the obsolete transaction callback setting restored boot, and the final attested Docker RSpec feature test passed.",
         "licenses": "Only the public Rubygems source is present. No newly identified incompatible license was found in the reviewed Rails 5.1 transitive delta; no automated license-audit adapter is configured, so this remains fixture-scoped review.",
         "reviewedAt": "2026-09-24T00:57:53.171Z"
+      },
+      "checkpointSha": "a7225de6a5daed2137da51277248ace2eced3872"
+    },
+    {
+      "from": "5.1.7",
+      "to": "5.2.8.1",
+      "files": [
+        "Gemfile",
+        "Gemfile.lock",
+        "config/initializers/content_security_policy.rb",
+        "config/initializers/new_framework_defaults.rb",
+        "config/initializers/new_framework_defaults_5_2.rb",
+        "config/storage.yml"
+      ],
+      "fixes": [
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock"
+          ],
+          "explanation": "Upgrade the contiguous Rails framework set to 5.2.8.1."
+        },
+        {
+          "files": [
+            "config/initializers/content_security_policy.rb",
+            "config/initializers/new_framework_defaults_5_2.rb",
+            "config/storage.yml"
+          ],
+          "explanation": "Accept only missing Rails 5.2 configuration templates while preserving existing files."
+        },
+        {
+          "files": [
+            "config/initializers/new_framework_defaults.rb"
+          ],
+          "explanation": "Remove raise_on_unfiltered_parameters and callback-chain compatibility toggles removed by Rails 5.2."
+        }
+      ],
+      "citations": [
+        {
+          "title": "Rails upgrade guide",
+          "url": "https://guides.rubyonrails.org/upgrading_ruby_on_rails.html"
+        }
+      ],
+      "tests": {
+        "command": "bundle exec rspec",
+        "count": 1,
+        "passed": true,
+        "failures": 0,
+        "durationSeconds": 44.382,
+        "coveragePercent": null,
+        "smoke": "Rails booted and the browser-backed Welcome feature exercised the application."
+      },
+      "appUpdateReview": {
+        "command": "bin/rails app:update",
+        "reviewedAt": "2026-09-24T01:08:00Z",
+        "outcome": "changes_applied",
+        "files": [
+          "config/initializers/content_security_policy.rb",
+          "config/initializers/new_framework_defaults_5_2.rb",
+          "config/storage.yml"
+        ],
+        "summary": "Reviewed conflict-skipping Rails 5.2 output; only missing CSP, framework-defaults, and Active Storage templates were added.",
+        "receiptId": "53e7bed3-7590-49df-8ef1-e05a876a1ead",
+        "executedAt": "2026-09-24T01:07:10.330Z",
+        "worktree": {
+          "algorithm": "sha256",
+          "headSha": "a7225de6a5daed2137da51277248ace2eced3872",
+          "diffSha256": "34dd27ab4bb00fab5b2ec940754d24d1dc98388e06343e6f7c6574eb414e3c1b"
+        }
+      },
+      "validationReceipts": [
+        {
+          "receiptVersion": 1,
+          "id": "53e7bed3-7590-49df-8ef1-e05a876a1ead",
+          "kind": "rails_app_update",
+          "commandId": "rails-app-update",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-dcb1fe09-1c2c-47d3-b9cd-53abf523bcad-app",
+            "bundle",
+            "exec",
+            "ruby",
+            "-e",
+            "require \"./config/application\"; require \"rails/generators\"; require \"rails/generators/rails/app/app_generator\"; generator = Rails::Generators::AppGenerator.new([\"rails\"], { api: !!Rails.application.config.api_only, update: true }, destination_root: Rails.root, behavior: :skip); File.exist?(Rails.root.join(\"config\", \"application.rb\")) ? generator.send(:app_const) : generator.send(:valid_const?); [:create_boot_file, :update_config_files, :create_bin_files, :display_upgrade_guide_info].each { |method| generator.send(method) }"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-dcb1fe09-1c2c-47d3-b9cd-53abf523bcad-app",
+            "id": "6996e4b87017dfb5274b55e1d3a21958233919be15e7f8cebbeaf32d454d4c9f",
+            "imageId": "sha256:a79c8ddb7f3d3748427e2d3a45dcae6d42f1d80d9ae3b98959b3a27b220bf434",
+            "imageRef": "ruby:2.6.10",
+            "ruby": "2.6.10"
+          },
+          "startedAt": "2026-09-24T01:07:10.330Z",
+          "finishedAt": "2026-09-24T01:07:20.514Z",
+          "durationMs": 10169,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "27c41213cbfd9bb86ec11ddf3fb69cbe7fba21c7cc31f2fd405827d649d0d6e9",
+            "bytes": 1535
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "a7225de6a5daed2137da51277248ace2eced3872",
+            "diffSha256": "34dd27ab4bb00fab5b2ec940754d24d1dc98388e06343e6f7c6574eb414e3c1b"
+          }
+        },
+        {
+          "receiptVersion": 1,
+          "id": "89309588-9032-428d-b05a-895f2c54445d",
+          "kind": "test",
+          "commandId": "docker-bundle-rspec",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-dcb1fe09-1c2c-47d3-b9cd-53abf523bcad-app",
+            "bundle",
+            "exec",
+            "rspec"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-dcb1fe09-1c2c-47d3-b9cd-53abf523bcad-app",
+            "id": "6996e4b87017dfb5274b55e1d3a21958233919be15e7f8cebbeaf32d454d4c9f",
+            "imageId": "sha256:a79c8ddb7f3d3748427e2d3a45dcae6d42f1d80d9ae3b98959b3a27b220bf434",
+            "imageRef": "ruby:2.6.10",
+            "ruby": "2.6.10"
+          },
+          "startedAt": "2026-09-24T01:10:15.206Z",
+          "finishedAt": "2026-09-24T01:10:59.603Z",
+          "durationMs": 44382,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "085418c713d7941e6bf4b2b9456bb4a17baa98b3c9f9cb376a7d8396e09a7ca7",
+            "bytes": 436
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "a7225de6a5daed2137da51277248ace2eced3872",
+            "diffSha256": "f3a755912c3bd311d067d74017822a067e18ddafcc79b9296afdda6a34ece969"
+          },
+          "testEvidence": {
+            "command": "bundle exec rspec",
+            "count": 1,
+            "passed": true,
+            "failures": 0,
+            "durationSeconds": 44.382,
+            "coveragePercent": null
+          }
+        }
+      ],
+      "status": "complete",
+      "dependencyReview": {
+        "completed": true,
+        "compatibility": "Focused Rails resolution upgraded the 5.2 framework set, Active Storage, and required transitives; removing obsolete Rails 5.0 compatibility toggles restored boot, and final attested Docker RSpec passed.",
+        "licenses": "Only the public Rubygems source is present. No newly identified incompatible license was found in the reviewed Rails 5.2 transitive delta; no automated license-audit adapter is configured, so this remains fixture-scoped review.",
+        "reviewedAt": "2026-09-24T01:11:11.507Z"
       }
     }
   ],
