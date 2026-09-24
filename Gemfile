@@ -38,21 +38,21 @@ gem 'loofah', '~> 2.25'
 
 # Assets
 gem 'autoprefixer-rails', '~> 10.4'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'coffee-rails', '~> 4.2'
+gem 'font-awesome-rails', '~> 4.7'
 gem 'i18n-js', '~> 3.9'
 gem 'jquery-rails', '~> 4.5'
 gem 'sassc-rails', '~> 2.1'
 gem 'slim_assets', '~> 0.0.3'
 gem 'turbolinks', '~> 5.2'
 gem 'uglifier', '~> 4.2'
-gem 'bootstrap-sass', '~> 3.4.1'
-gem 'font-awesome-rails', '~> 4.7'
 
 group :development, :test do
   gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', '~> 5.2'
-  gem 'observer', '~> 0.1'
   gem 'faker', '~> 2.2.1'
+  gem 'observer', '~> 0.1'
   gem 'pry', '~> 0.14.2'
   gem 'pry-byebug', '~> 3.10'
   gem 'pry-rails', '~> 0.3.9'
@@ -73,9 +73,9 @@ end
 
 group :test do
   gem 'capybara', '~> 3.32.0'
-  gem 'matrix', '~> 0.4'
   gem 'database_cleaner-active_record', '~> 2.1'
   gem 'email_spec', '~> 2.2'
+  gem 'matrix', '~> 0.4'
   gem 'selenium-webdriver', '~> 3.142'
   gem 'simplecov', '~> 0.18.5', require: false
   gem 'simplecov-lcov', '~> 0.8.0', require: false
