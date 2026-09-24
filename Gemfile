@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 ruby '2.7.8'
-gem 'rails', '6.1.7.10'
+gem 'rails', '7.0.10'
 
 gem 'logger', '~> 1.4'
 
@@ -44,8 +44,9 @@ gem 'jquery-rails', '~> 4.5'
 gem 'sassc-rails', '~> 2.1'
 gem 'slim_assets', '~> 0.0.3'
 gem 'turbolinks', '~> 5.2'
-gem 'twbs_sass_rails', '~> 10.2'
 gem 'uglifier', '~> 4.2'
+gem 'bootstrap-sass', '~> 3.4.1'
+gem 'font-awesome-rails', '~> 4.7'
 
 group :development, :test do
   gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]

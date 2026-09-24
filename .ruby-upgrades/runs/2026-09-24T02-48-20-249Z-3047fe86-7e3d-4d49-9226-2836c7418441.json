@@ -12,7 +12,7 @@
   "branch": "ruby-upgrade/e2e-3.4",
   "worktreeRoot": "[LOCAL PATH]",
   "startingSha": "ae71ee175ac0ce52cf45d638e87825d3190f1631",
-  "expectedHead": "cbb0805dc037ad3f40fb8e157ac543768a623b25",
+  "expectedHead": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
   "control": {
     "stopAfterHop": false
   },
@@ -103,6 +103,15 @@
     "Checkpoint cbb0805dc0 committed for Rails 6.0.6.1.",
     "Discarded a reviewed app:update result: Discarded the pending 6.1.7.10 app:update receipt because the dependency fix (pg 0.21.0 -> 1.5.9) changed the worktree after app:update ran; re-execute app:update and tests against the final state.",
     "Rails 6.1.7.10 hop validated; app:update reviewed; rspec green.",
+    "Recorded dependency compatibility and license review for the validated hop.",
+    "Checkpoint for Rails 6.1.7.10 hop committed.",
+    "Discarded a reviewed app:update result: Discarded the pending 7.0.10 app:update receipt because the bootstrap manifest was renamed (bootstrap.scss -> bootstrap-manifest.scss) to resolve the Sass @import loop, changing the worktree after app:update ran; re-execute app:update and tests against the final state.",
+    "Discarded a reviewed app:update result: Discarded the pending 7.0.10 app:update receipt because font-awesome-rails was added to restore the fontawesome/font-awesome import orphaned by the twbs_sass_rails removal, changing the worktree after app:update ran; re-execute app:update and tests against the final state.",
+    "Discarded a reviewed app:update result: Discarded the pending 7.0.10 app:update receipt because font-awesome moved from an SCSS @import to a Sprockets require directive in application.css, changing the worktree after app:update ran; re-execute app:update and tests against the final state.",
+    "Rails 7.0.10 hop validated; app:update reviewed; bootstrap-sass/font-awesome swap verified; rspec green.",
+    "Recorded dependency compatibility and license review for the validated hop.",
+    "Discarded the latest validated Rails iteration (6.1.7.10 -> 7.0.10) to re-validate the hop: Discarded the recorded 6.1.7.10 -> 7.0.10 iteration because the stray font-awesome-rails-4.7.0.9.gem fetch artifact was removed from the worktree after final validation, so the commit gate's validation-fingerprint gate correctly refused the checkpoint; re-execute app:update and tests against the clean tree.",
+    "Rails 7.0.10 hop re-validated after discarding the stale run; app:update reviewed; bootstrap-sass/font-awesome swap verified on the clean tree; rspec green.",
     "Recorded dependency compatibility and license review for the validated hop."
   ],
   "iterations": [
@@ -425,6 +434,195 @@
         "compatibility": "Focused Rails resolution upgraded the framework set to 6.1.7.10. pg migrated from 0.21.0 (Rails 5 era, incompatible with the Rails 6.1 adapter requirement of pg ~> 1.1) to 1.5.9, the newest line supporting Ruby 2.7.8; pg 1.6.3 was rejected because it requires Ruby >= 3.0. Final attested Docker RSpec passed.",
         "licenses": "Only the public Rubygems source is present. No newly identified incompatible license was found in the Rails 6.1.7.10 and pg 1.5.9 transitive delta; no automated license-audit adapter is configured, so this remains fixture-scoped review.",
         "reviewedAt": "2026-09-24T03:28:11.373Z"
+      },
+      "checkpointSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16"
+    },
+    {
+      "from": "6.1.7.10",
+      "to": "7.0.10",
+      "files": [
+        "Gemfile",
+        "Gemfile.lock",
+        "app/assets/javascripts/application.coffee",
+        "app/assets/stylesheets/application.css",
+        "app/assets/stylesheets/bootstrap-manifest.scss",
+        "app/assets/stylesheets/bootstrap-variables.scss",
+        "app/assets/stylesheets/twbs-variables.scss",
+        "app/assets/stylesheets/twbs.scss",
+        "app/assets/stylesheets/turbolinks-progress-bar.scss",
+        ".scss-lint.yml",
+        "config/initializers/new_framework_defaults_7_0.rb"
+      ],
+      "tests": {
+        "command": "bundle exec rspec",
+        "count": 1,
+        "passed": true,
+        "failures": 0,
+        "durationSeconds": 43.049,
+        "coveragePercent": null,
+        "smoke": "Rails 7.0 boots the Starterapp fixture against PostgreSQL with bootstrap-sass and font-awesome assets compiling, and the browser-backed Welcome feature still responds."
+      },
+      "fixes": [
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock"
+          ],
+          "explanation": "Upgrade the contiguous Rails framework set to 7.0.10."
+        },
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock",
+            "app/assets/javascripts/application.coffee",
+            "app/assets/stylesheets/application.css",
+            "app/assets/stylesheets/bootstrap-manifest.scss",
+            "app/assets/stylesheets/bootstrap-variables.scss",
+            "app/assets/stylesheets/twbs-variables.scss",
+            "app/assets/stylesheets/twbs.scss",
+            "app/assets/stylesheets/turbolinks-progress-bar.scss",
+            ".scss-lint.yml"
+          ],
+          "explanation": "Replace twbs_sass_rails (abandoned, caps at rails < 6.2, which could not resolve against Rails 7) with the maintained bootstrap-sass 3.4.1 plus font-awesome-rails 4.7; rename the twbs/ import paths to bootstrap-sass conventions (manifest named bootstrap-manifest.scss so @import \"bootstrap\" resolves to the gem, not a local file; font-awesome moved from an SCSS @import to a Sprockets require directive), preserving Bootstrap 3 styling."
+        },
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock"
+          ],
+          "explanation": "Raise the container to Bundler 2.4.22 because rubygems.org retired the legacy Dependency API that Bundler 1.17.3 relies on; new gems can no longer be resolved by the old bundler. The compact-index Bundler 2.x line is required for the rest of this migration."
+        },
+        {
+          "files": [
+            "config/initializers/new_framework_defaults_7_0.rb"
+          ],
+          "explanation": "Accept the Rails 7.0 framework-defaults template added by app:update; all toggles remain commented, preserving current behavior."
+        }
+      ],
+      "citations": [
+        {
+          "title": "Rails upgrade guide",
+          "url": "https://guides.rubyonrails.org/upgrading_ruby_on_rails.html"
+        },
+        {
+          "title": "Ruby on Rails releases",
+          "url": "https://rubyonrails.org/category/releases"
+        },
+        {
+          "title": "Rubygems Dependency API retirement",
+          "url": "https://blog.rubygems.org/2023/02/22/dependency-api-deprecation.html"
+        }
+      ],
+      "appUpdateReview": {
+        "command": "bin/rails app:update",
+        "reviewedAt": "2026-09-24T04:27:00Z",
+        "outcome": "changes_applied",
+        "files": [
+          "config/initializers/new_framework_defaults_7_0.rb"
+        ],
+        "summary": "Reviewed conflict-skipping Rails 7.0 app:update output on the clean tree; only the missing new_framework_defaults_7_0.rb template was added and all toggles remain commented out.",
+        "receiptId": "c291a5d1-a114-4cd2-89f0-03bcf9c5d287",
+        "executedAt": "2026-09-24T04:26:43.827Z",
+        "worktree": {
+          "algorithm": "sha256",
+          "headSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+          "diffSha256": "80c1dc122489e086efe7885e45a475b456a9879cbd4e10b91b74ff22ca48a5e7"
+        }
+      },
+      "validationReceipts": [
+        {
+          "receiptVersion": 1,
+          "id": "c291a5d1-a114-4cd2-89f0-03bcf9c5d287",
+          "kind": "rails_app_update",
+          "commandId": "rails-app-update",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "bundle",
+            "exec",
+            "ruby",
+            "-e",
+            "require \"./config/application\"; require \"rails/generators\"; require \"rails/generators/rails/app/app_generator\"; generator = Rails::Generators::AppGenerator.new([\"rails\"], { api: !!Rails.application.config.api_only, update: true }, destination_root: Rails.root, behavior: :skip); File.exist?(Rails.root.join(\"config\", \"application.rb\")) ? generator.send(:app_const) : generator.send(:valid_const?); [:create_boot_file, :update_config_files, :create_bin_files, :display_upgrade_guide_info].each { |method| generator.send(method) }"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+            "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+            "imageRef": "ruby:2.7.8",
+            "ruby": "2.7.8"
+          },
+          "startedAt": "2026-09-24T04:26:43.827Z",
+          "finishedAt": "2026-09-24T04:26:51.472Z",
+          "durationMs": 7642,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "1b25fcc0e5078bfe58b3110405699c3b6ee713d970f241800737e8069b0595c4",
+            "bytes": 1974
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+            "diffSha256": "80c1dc122489e086efe7885e45a475b456a9879cbd4e10b91b74ff22ca48a5e7"
+          }
+        },
+        {
+          "receiptVersion": 1,
+          "id": "5f9ee4a0-a977-4a61-8624-0297b43f13db",
+          "kind": "test",
+          "commandId": "docker-bundle-rspec",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "bundle",
+            "exec",
+            "rspec"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+            "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+            "imageRef": "ruby:2.7.8",
+            "ruby": "2.7.8"
+          },
+          "startedAt": "2026-09-24T04:27:12.979Z",
+          "finishedAt": "2026-09-24T04:27:56.032Z",
+          "durationMs": 43049,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "d9fa9e38eb65a04a89afa18ad7c13ecc6054590c376dd0c08da3f3a7c9a7671d",
+            "bytes": 1977
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+            "diffSha256": "80c1dc122489e086efe7885e45a475b456a9879cbd4e10b91b74ff22ca48a5e7"
+          },
+          "testEvidence": {
+            "command": "bundle exec rspec",
+            "count": 1,
+            "passed": true,
+            "failures": 0,
+            "durationSeconds": 43.049,
+            "coveragePercent": null
+          }
+        }
+      ],
+      "status": "complete",
+      "dependencyReview": {
+        "completed": true,
+        "compatibility": "Focused Rails resolution upgraded the full framework set to 7.0.10. twbs_sass_rails 10.2.0 was removed because it caps at rails < 6.2 and could not co-resolve with Rails 7; replaced with bootstrap-sass 3.4.1 (only sassc >= 2.0 needed; no Rails cap) and font-awesome-rails 4.7.0.9 (railties >= 3.2, < 8.0). Bundler rose from 1.17.3 to 2.4.22 because rubygems.org retired the legacy Dependency API; the compact-index format cannot resolve newly added gems. Final attested Docker RSpec passed on the clean tree.",
+        "licenses": "Only the public Rubygems source is present. No newly identified incompatible license was found in the Rails 7.0.10, bootstrap-sass 3.4.1, or font-awesome-rails transitive delta (rainbow/loofah-style MIT, sassc MIT, font-awesome MIT/OFL compliance checked for the icon font); no automated license-audit adapter is configured, so this remains fixture-scoped review.",
+        "reviewedAt": "2026-09-24T04:28:03.714Z"
       }
     }
   ],
@@ -474,6 +672,330 @@
       },
       "reason": "Discarded the pending 6.1.7.10 app:update receipt because the dependency fix (pg 0.21.0 -> 1.5.9) changed the worktree after app:update ran; re-execute app:update and tests against the final state.",
       "discardedAt": "2026-09-24T03:23:59.628Z"
+    },
+    {
+      "receipt": {
+        "receiptVersion": 1,
+        "id": "50044b09-b2fb-4a63-99bd-6720dd369fcf",
+        "kind": "rails_app_update",
+        "commandId": "rails-app-update",
+        "argv": [
+          "docker",
+          "exec",
+          "--env",
+          "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+          "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+          "bundle",
+          "exec",
+          "ruby",
+          "-e",
+          "require \"./config/application\"; require \"rails/generators\"; require \"rails/generators/rails/app/app_generator\"; generator = Rails::Generators::AppGenerator.new([\"rails\"], { api: !!Rails.application.config.api_only, update: true }, destination_root: Rails.root, behavior: :skip); File.exist?(Rails.root.join(\"config\", \"application.rb\")) ? generator.send(:app_const) : generator.send(:valid_const?); [:create_boot_file, :update_config_files, :create_bin_files, :display_upgrade_guide_info].each { |method| generator.send(method) }"
+        ],
+        "environment": {
+          "type": "docker",
+          "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+          "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+          "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+          "imageRef": "ruby:2.7.8",
+          "ruby": "2.7.8"
+        },
+        "startedAt": "2026-09-24T03:42:25.528Z",
+        "finishedAt": "2026-09-24T03:42:33.202Z",
+        "durationMs": 7659,
+        "exitCode": 0,
+        "timedOut": false,
+        "output": {
+          "redactedSha256": "55970cb1ad3a44ce44bafa11e7fb461229a71bf3eb5baaad0711fcfbe1876a02",
+          "bytes": 1974
+        },
+        "worktree": {
+          "algorithm": "sha256",
+          "headSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+          "diffSha256": "86c5dfbb94e2bfd44dba3dff2fa0df0ffd2e8a385631998fe205041829577134"
+        }
+      },
+      "reason": "Discarded the pending 7.0.10 app:update receipt because the bootstrap manifest was renamed (bootstrap.scss -> bootstrap-manifest.scss) to resolve the Sass @import loop, changing the worktree after app:update ran; re-execute app:update and tests against the final state.",
+      "discardedAt": "2026-09-24T03:45:05.715Z"
+    },
+    {
+      "receipt": {
+        "receiptVersion": 1,
+        "id": "3d64d133-6850-4c25-a9f1-3d8637f9fe79",
+        "kind": "rails_app_update",
+        "commandId": "rails-app-update",
+        "argv": [
+          "docker",
+          "exec",
+          "--env",
+          "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+          "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+          "bundle",
+          "exec",
+          "ruby",
+          "-e",
+          "require \"./config/application\"; require \"rails/generators\"; require \"rails/generators/rails/app/app_generator\"; generator = Rails::Generators::AppGenerator.new([\"rails\"], { api: !!Rails.application.config.api_only, update: true }, destination_root: Rails.root, behavior: :skip); File.exist?(Rails.root.join(\"config\", \"application.rb\")) ? generator.send(:app_const) : generator.send(:valid_const?); [:create_boot_file, :update_config_files, :create_bin_files, :display_upgrade_guide_info].each { |method| generator.send(method) }"
+        ],
+        "environment": {
+          "type": "docker",
+          "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+          "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+          "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+          "imageRef": "ruby:2.7.8",
+          "ruby": "2.7.8"
+        },
+        "startedAt": "2026-09-24T03:45:06.863Z",
+        "finishedAt": "2026-09-24T03:45:16.267Z",
+        "durationMs": 9401,
+        "exitCode": 0,
+        "timedOut": false,
+        "output": {
+          "redactedSha256": "1b25fcc0e5078bfe58b3110405699c3b6ee713d970f241800737e8069b0595c4",
+          "bytes": 1974
+        },
+        "worktree": {
+          "algorithm": "sha256",
+          "headSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+          "diffSha256": "8496aab018d111803823618a2e8aef332443a16211374dbaf4f5f1c66a89880a"
+        }
+      },
+      "reason": "Discarded the pending 7.0.10 app:update receipt because font-awesome-rails was added to restore the fontawesome/font-awesome import orphaned by the twbs_sass_rails removal, changing the worktree after app:update ran; re-execute app:update and tests against the final state.",
+      "discardedAt": "2026-09-24T03:48:37.721Z"
+    },
+    {
+      "receipt": {
+        "receiptVersion": 1,
+        "id": "8d964e65-5aa9-4fce-af8d-784da69903b4",
+        "kind": "rails_app_update",
+        "commandId": "rails-app-update",
+        "argv": [
+          "docker",
+          "exec",
+          "--env",
+          "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+          "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+          "bundle",
+          "exec",
+          "ruby",
+          "-e",
+          "require \"./config/application\"; require \"rails/generators\"; require \"rails/generators/rails/app/app_generator\"; generator = Rails::Generators::AppGenerator.new([\"rails\"], { api: !!Rails.application.config.api_only, update: true }, destination_root: Rails.root, behavior: :skip); File.exist?(Rails.root.join(\"config\", \"application.rb\")) ? generator.send(:app_const) : generator.send(:valid_const?); [:create_boot_file, :update_config_files, :create_bin_files, :display_upgrade_guide_info].each { |method| generator.send(method) }"
+        ],
+        "environment": {
+          "type": "docker",
+          "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+          "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+          "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+          "imageRef": "ruby:2.7.8",
+          "ruby": "2.7.8"
+        },
+        "startedAt": "2026-09-24T03:48:39.701Z",
+        "finishedAt": "2026-09-24T03:48:58.736Z",
+        "durationMs": 19031,
+        "exitCode": 0,
+        "timedOut": false,
+        "output": {
+          "redactedSha256": "1b25fcc0e5078bfe58b3110405699c3b6ee713d970f241800737e8069b0595c4",
+          "bytes": 1974
+        },
+        "worktree": {
+          "algorithm": "sha256",
+          "headSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+          "diffSha256": "cfddbe539f22040e853516edf68689c0925f91056d1a0510a36530d29ddec1c6"
+        }
+      },
+      "reason": "Discarded the pending 7.0.10 app:update receipt because font-awesome moved from an SCSS @import to a Sprockets require directive in application.css, changing the worktree after app:update ran; re-execute app:update and tests against the final state.",
+      "discardedAt": "2026-09-24T03:51:47.112Z"
+    }
+  ],
+  "discardedIterations": [
+    {
+      "iteration": {
+        "from": "6.1.7.10",
+        "to": "7.0.10",
+        "files": [
+          "Gemfile",
+          "Gemfile.lock",
+          "app/assets/javascripts/application.coffee",
+          "app/assets/stylesheets/application.css",
+          "app/assets/stylesheets/bootstrap-manifest.scss",
+          "app/assets/stylesheets/bootstrap-variables.scss",
+          "app/assets/stylesheets/turbolinks-progress-bar.scss",
+          ".scss-lint.yml",
+          "config/initializers/new_framework_defaults_7_0.rb",
+          "app/assets/stylesheets/twbs.scss",
+          "app/assets/stylesheets/twbs-variables.scss"
+        ],
+        "tests": {
+          "command": "bundle exec rspec",
+          "count": 1,
+          "passed": true,
+          "failures": 0,
+          "durationSeconds": 52.65,
+          "coveragePercent": null,
+          "smoke": "Rails 7.0 boots the Starterapp fixture against PostgreSQL with bootstrap-sass and font-awesome assets compiling, and the browser-backed Welcome feature still responds."
+        },
+        "fixes": [
+          {
+            "files": [
+              "Gemfile",
+              "Gemfile.lock"
+            ],
+            "explanation": "Upgrade the contiguous Rails framework set to 7.0.10."
+          },
+          {
+            "files": [
+              "Gemfile",
+              "Gemfile.lock",
+              "app/assets/javascripts/application.coffee",
+              "app/assets/stylesheets/application.css",
+              "app/assets/stylesheets/bootstrap-manifest.scss",
+              "app/assets/stylesheets/bootstrap-variables.scss",
+              "app/assets/stylesheets/turbolinks-progress-bar.scss",
+              ".scss-lint.yml"
+            ],
+            "explanation": "Replace twbs_sass_rails (abandoned, caps at rails < 6.2, which could not resolve against Rails 7) with the maintained bootstrap-sass 3.4.1 plus font-awesome-rails 4.7; rename the twbs/ import paths to bootstrap-sass conventions (manifest named bootstrap-manifest.scss so @import \"bootstrap\" resolves to the gem, not a local file; font-awesome moved from an SCSS @import to a Sprockets require directive), preserving Bootstrap 3 styling."
+          },
+          {
+            "files": [
+              "Gemfile",
+              "Gemfile.lock"
+            ],
+            "explanation": "Raise the container to Bundler 2.4.22 because rubygems.org retired the legacy Dependency API that Bundler 1.17.3 relies on; new gems can no longer be resolved by the old bundler. The compact-index Bundler 2.x line is required for the rest of this migration."
+          },
+          {
+            "files": [
+              "config/initializers/new_framework_defaults_7_0.rb"
+            ],
+            "explanation": "Accept the Rails 7.0 framework-defaults template added by app:update; all toggles remain commented, preserving current behavior."
+          }
+        ],
+        "citations": [
+          {
+            "title": "Rails upgrade guide",
+            "url": "https://guides.rubyonrails.org/upgrading_ruby_on_rails.html"
+          },
+          {
+            "title": "Ruby on Rails releases",
+            "url": "https://rubyonrails.org/category/releases"
+          },
+          {
+            "title": "Rubygems Dependency API retirement",
+            "url": "https://blog.rubygems.org/2023/02/22/dependency-api-deprecation.html"
+          }
+        ],
+        "appUpdateReview": {
+          "command": "bin/rails app:update",
+          "reviewedAt": "2026-09-24T03:52:30Z",
+          "outcome": "changes_applied",
+          "files": [
+            "config/initializers/new_framework_defaults_7_0.rb"
+          ],
+          "summary": "Reviewed conflict-skipping Rails 7.0 app:update output; only the missing new_framework_defaults_7_0.rb template was added and all toggles remain commented out.",
+          "receiptId": "fa27e712-f519-4a95-a25a-74b62556976b",
+          "executedAt": "2026-09-24T03:51:48.091Z",
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+            "diffSha256": "c6467abc6cd082ba1b230b74d3ff58113af4ae1ab57f40ce5fa5740b38b5a894"
+          }
+        },
+        "validationReceipts": [
+          {
+            "receiptVersion": 1,
+            "id": "fa27e712-f519-4a95-a25a-74b62556976b",
+            "kind": "rails_app_update",
+            "commandId": "rails-app-update",
+            "argv": [
+              "docker",
+              "exec",
+              "--env",
+              "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+              "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+              "bundle",
+              "exec",
+              "ruby",
+              "-e",
+              "require \"./config/application\"; require \"rails/generators\"; require \"rails/generators/rails/app/app_generator\"; generator = Rails::Generators::AppGenerator.new([\"rails\"], { api: !!Rails.application.config.api_only, update: true }, destination_root: Rails.root, behavior: :skip); File.exist?(Rails.root.join(\"config\", \"application.rb\")) ? generator.send(:app_const) : generator.send(:valid_const?); [:create_boot_file, :update_config_files, :create_bin_files, :display_upgrade_guide_info].each { |method| generator.send(method) }"
+            ],
+            "environment": {
+              "type": "docker",
+              "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+              "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+              "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+              "imageRef": "ruby:2.7.8",
+              "ruby": "2.7.8"
+            },
+            "startedAt": "2026-09-24T03:51:48.091Z",
+            "finishedAt": "2026-09-24T03:52:03.485Z",
+            "durationMs": 15389,
+            "exitCode": 0,
+            "timedOut": false,
+            "output": {
+              "redactedSha256": "1b25fcc0e5078bfe58b3110405699c3b6ee713d970f241800737e8069b0595c4",
+              "bytes": 1974
+            },
+            "worktree": {
+              "algorithm": "sha256",
+              "headSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+              "diffSha256": "c6467abc6cd082ba1b230b74d3ff58113af4ae1ab57f40ce5fa5740b38b5a894"
+            }
+          },
+          {
+            "receiptVersion": 1,
+            "id": "fc135f81-2d6c-4b8d-ab66-bb297e5d3b54",
+            "kind": "test",
+            "commandId": "docker-bundle-rspec",
+            "argv": [
+              "docker",
+              "exec",
+              "--env",
+              "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+              "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+              "bundle",
+              "exec",
+              "rspec"
+            ],
+            "environment": {
+              "type": "docker",
+              "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+              "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+              "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+              "imageRef": "ruby:2.7.8",
+              "ruby": "2.7.8"
+            },
+            "startedAt": "2026-09-24T03:53:36.743Z",
+            "finishedAt": "2026-09-24T03:54:29.403Z",
+            "durationMs": 52650,
+            "exitCode": 0,
+            "timedOut": false,
+            "output": {
+              "redactedSha256": "6c217a3a30acb9e45dd052766a5d40b5e6652d3a34e8fdc8c1b4aba3a8267b93",
+              "bytes": 1974
+            },
+            "worktree": {
+              "algorithm": "sha256",
+              "headSha": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+              "diffSha256": "c6467abc6cd082ba1b230b74d3ff58113af4ae1ab57f40ce5fa5740b38b5a894"
+            },
+            "testEvidence": {
+              "command": "bundle exec rspec",
+              "count": 1,
+              "passed": true,
+              "failures": 0,
+              "durationSeconds": 52.65,
+              "coveragePercent": null
+            }
+          }
+        ],
+        "status": "complete",
+        "dependencyReview": {
+          "completed": true,
+          "compatibility": "Focused Rails resolution upgraded the full framework set to 7.0.10. twbs_sass_rails 10.2.0 was removed because it caps at rails < 6.2 and could not co-resolve with Rails 7; replaced with bootstrap-sass 3.4.1 (only sassc >= 2.0 needed; no Rails cap) and font-awesome-rails 4.7.0.9 (railties >= 3.2, < 8.0). Bundler rose from 1.17.3 to 2.4.22 because rubygems.org retired the legacy Dependency API; the compact-index format cannot resolve newly added gems. Final attested Docker RSpec passed.",
+          "licenses": "Only the public Rubygems source is present. No newly identified incompatible license was found in the Rails 7.0.10, bootstrap-sass 3.4.1, or font-awesome-rails transitive delta (rainbow/loofah-style MIT, sassc MIT, font-awesome MIT/OFL compliance checked for the icon font); no automated license-audit adapter is configured, so this remains fixture-scoped review.",
+          "reviewedAt": "2026-09-24T03:54:43.389Z"
+        }
+      },
+      "reason": "Discarded the recorded 6.1.7.10 -> 7.0.10 iteration because the stray font-awesome-rails-4.7.0.9.gem fetch artifact was removed from the worktree after final validation, so the commit gate's validation-fingerprint gate correctly refused the checkpoint; re-execute app:update and tests against the clean tree.",
+      "discardedAt": "2026-09-24T04:26:42.830Z"
     }
   ]
 }
