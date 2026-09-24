@@ -2,6 +2,11 @@
 
 require File.expand_path('boot', __dir__)
 
+# ActiveSupport 6.0 requires active_support/logger_silence before "logger",
+# and logger_thread_safe_level evaluates Logger::Severity at load time.
+# Rails 7.1 made this dependency permanent; declare it explicitly here.
+require 'logger'
+
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems

@@ -3,7 +3,9 @@
 source 'https://rubygems.org'
 
 ruby '2.7.8'
-gem 'rails', '5.2.8.1'
+gem 'rails', '6.0.6.1'
+
+gem 'logger', '~> 1.4'
 
 gem 'crack', '0.4.5'
 

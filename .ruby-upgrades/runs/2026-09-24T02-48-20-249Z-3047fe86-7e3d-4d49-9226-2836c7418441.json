@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 2,
+  "validationReceiptsRequired": true,
+  "reportType": "rails_bridge",
+  "runId": "41f40bc2-9321-483a-afc7-3e1266a5e99d",
+  "title": "Rails bridge 5.2.8.1 to 7.1.6",
+  "status": "in_progress",
+  "phase": "hop_validated",
+  "startedAt": "2026-09-24T02:48:20.252Z",
+  "targetRails": "7.1.6",
+  "targetRailsPinnedAt": "2026-09-24T02:48:20.252Z",
+  "branch": "ruby-upgrade/e2e-3.4",
+  "worktreeRoot": "[LOCAL PATH]",
+  "startingSha": "ae71ee175ac0ce52cf45d638e87825d3190f1631",
+  "expectedHead": "ae71ee175ac0ce52cf45d638e87825d3190f1631",
+  "control": {
+    "stopAfterHop": false
+  },
+  "inventory": {
+    "root": "[LOCAL PATH]",
+    "supported": true,
+    "framework": "rails",
+    "testFramework": "rspec",
+    "rubyDeclarations": [
+      {
+        "file": "Gemfile",
+        "value": "2.7.8"
+      }
+    ],
+    "rails": {
+      "declaredVersion": "5.2.8",
+      "resolvedVersion": "5.2.8.1"
+    },
+    "recommendedCommands": [
+      "bundle exec rspec"
+    ],
+    "ci": [
+      ".github/workflows"
+    ],
+    "deploy": [
+      "Procfile",
+      "app.json"
+    ],
+    "requiresDecision": false
+  },
+  "supplyChain": {
+    "lockfile": "Gemfile.lock",
+    "sources": [
+      "https://rubygems.org/"
+    ],
+    "declaredSources": [
+      "https://rubygems.org"
+    ],
+    "privateSources": [],
+    "dependencyCount": 129,
+    "vulnerabilityStatus": "requires_bundle_audit_review",
+    "licenseStatus": "requires_bundle_license_review"
+  },
+  "gitCapabilities": {
+    "supported": true,
+    "shallow": false,
+    "sparseCheckout": false,
+    "submodules": false,
+    "lfsConfigured": false,
+    "recommendation": "Standard Git topology."
+  },
+  "bridge": {
+    "rubyReportPath": ".ruby-upgrades/runs/2026-09-24T01-13-14-143Z-6a59e6e1-8663-43e1-82b8-b69d2bd13eef.json",
+    "rubyRunId": "8845e8c0-444a-48db-89e3-0d60daa12e9d",
+    "rubyFrom": "2.7.8",
+    "rubyTo": "3.0.7",
+    "railsFrom": "5.2.8.1",
+    "railsTo": "7.1.6",
+    "approvedAt": "2026-09-24T02:48:09.840Z"
+  },
+  "research": {
+    "ladder": [
+      "5.2.8.1",
+      "6.0.6.1",
+      "6.1.7.10",
+      "7.0.10",
+      "7.1.6"
+    ],
+    "citations": [
+      {
+        "title": "Rails upgrade guide",
+        "url": "https://guides.rubyonrails.org/upgrading_ruby_on_rails.html"
+      },
+      {
+        "title": "Ruby on Rails releases",
+        "url": "https://rubyonrails.org/category/releases"
+      }
+    ]
+  },
+  "riskDecisions": [],
+  "requiredRisks": [],
+  "summary": [
+    "Rails bridge initialized from blocked Ruby compatibility decision.",
+    "Bridge inventory captured at Ruby 2.7.8 and Rails 5.2.8.1.",
+    "Pinned the contiguous Rails 5.2->7.1 bridge ladder through the final 7.1.6 release.",
+    "Rails 6.0.6.1 hop validated; app:update reviewed; rspec green.",
+    "Recorded dependency compatibility and license review for the validated hop."
+  ],
+  "iterations": [
+    {
+      "from": "5.2.8.1",
+      "to": "6.0.6.1",
+      "files": [
+        "Gemfile",
+        "Gemfile.lock",
+        "config/application.rb",
+        "config/initializers/new_framework_defaults_6_0.rb"
+      ],
+      "tests": {
+        "command": "bundle exec rspec",
+        "count": 1,
+        "passed": true,
+        "failures": 0,
+        "durationSeconds": 43.541,
+        "coveragePercent": null,
+        "smoke": "Rails 6.0 boots the Starterapp fixture and the browser-backed Welcome feature still responds."
+      },
+      "fixes": [
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock"
+          ],
+          "explanation": "Upgrade the contiguous Rails framework set to 6.0.6.1."
+        },
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock",
+            "config/application.rb"
+          ],
+          "explanation": "Declare logger (the gem Rails 7.1 later made permanent) because ActiveSupport 6.0 requires logger_silence before logger and logger_thread_safe_level evaluates Logger::Severity at load time."
+        },
+        {
+          "files": [
+            "config/initializers/new_framework_defaults_6_0.rb"
+          ],
+          "explanation": "Accept the Rails 6.0 framework-defaults template added by app:update; all toggles remain commented, preserving current behavior."
+        }
+      ],
+      "citations": [
+        {
+          "title": "Rails upgrade guide",
+          "url": "https://guides.rubyonrails.org/upgrading_ruby_on_rails.html"
+        },
+        {
+          "title": "Rails 6.0.6.1 release",
+          "url": "https://rubyonrails.org/2023/1/17/Rails-Versions-6-0-6-1-6-1-7-1-7-0-4-1-have-been-released"
+        }
+      ],
+      "appUpdateReview": {
+        "command": "bin/rails app:update",
+        "reviewedAt": "2026-09-24T03:13:00Z",
+        "outcome": "changes_applied",
+        "files": [
+          "config/initializers/new_framework_defaults_6_0.rb"
+        ],
+        "summary": "Reviewed conflict-skipping Rails 6.0 app:update output; only the missing new_framework_defaults_6_0.rb template was added and all toggles remain commented out.",
+        "receiptId": "89dc71f7-8fc4-4b39-8b63-b04d1c09f3dc",
+        "executedAt": "2026-09-24T03:11:52.602Z",
+        "worktree": {
+          "algorithm": "sha256",
+          "headSha": "ae71ee175ac0ce52cf45d638e87825d3190f1631",
+          "diffSha256": "1da920eb104f1b25ba725fce786cdbf1ea85a3d457652c2da23ab201da15a551"
+        }
+      },
+      "validationReceipts": [
+        {
+          "receiptVersion": 1,
+          "id": "89dc71f7-8fc4-4b39-8b63-b04d1c09f3dc",
+          "kind": "rails_app_update",
+          "commandId": "rails-app-update",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "bundle",
+            "exec",
+            "ruby",
+            "-e",
+            "require \"./config/application\"; require \"rails/generators\"; require \"rails/generators/rails/app/app_generator\"; generator = Rails::Generators::AppGenerator.new([\"rails\"], { api: !!Rails.application.config.api_only, update: true }, destination_root: Rails.root, behavior: :skip); File.exist?(Rails.root.join(\"config\", \"application.rb\")) ? generator.send(:app_const) : generator.send(:valid_const?); [:create_boot_file, :update_config_files, :create_bin_files, :display_upgrade_guide_info].each { |method| generator.send(method) }"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+            "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+            "imageRef": "ruby:2.7.8",
+            "ruby": "2.7.8"
+          },
+          "startedAt": "2026-09-24T03:11:52.602Z",
+          "finishedAt": "2026-09-24T03:12:02.030Z",
+          "durationMs": 9412,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "63752c81e977448ca5098361a10de1cd3a3bf30a6fbad2788aaccc5c96caffbc",
+            "bytes": 2133
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "ae71ee175ac0ce52cf45d638e87825d3190f1631",
+            "diffSha256": "1da920eb104f1b25ba725fce786cdbf1ea85a3d457652c2da23ab201da15a551"
+          }
+        },
+        {
+          "receiptVersion": 1,
+          "id": "bcdd1e6e-8a41-480e-8048-ccbf28308223",
+          "kind": "test",
+          "commandId": "docker-bundle-rspec",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "bundle",
+            "exec",
+            "rspec"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+            "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+            "imageRef": "ruby:2.7.8",
+            "ruby": "2.7.8"
+          },
+          "startedAt": "2026-09-24T03:13:06.160Z",
+          "finishedAt": "2026-09-24T03:13:49.717Z",
+          "durationMs": 43541,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "4041bd1e7dd467f0d910bc687d41a2e2ebd18803cfb2111263c08c880b9a6981",
+            "bytes": 2937
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "ae71ee175ac0ce52cf45d638e87825d3190f1631",
+            "diffSha256": "1da920eb104f1b25ba725fce786cdbf1ea85a3d457652c2da23ab201da15a551"
+          },
+          "testEvidence": {
+            "command": "bundle exec rspec",
+            "count": 1,
+            "passed": true,
+            "failures": 0,
+            "durationSeconds": 43.541,
+            "coveragePercent": null
+          }
+        }
+      ],
+      "status": "complete",
+      "dependencyReview": {
+        "completed": true,
+        "compatibility": "Focused Rails resolution upgraded the 5.2 framework set to 6.0.6.1 (actioncable/actionmailer/actionpack/actionview/actiontext/activejob/activemodel/activerecord/activestorage/activesupport/railties), added actionmailbox, actiontext, marcel 1.2.1, nokogiri 1.15.7, net-imap 0.4.25, and zeitwerk 2.6.18, and dropped arel. Declaring logger restores boot on Ruby 2.7.8; final attested Docker RSpec passed.",
+        "licenses": "Only the public Rubygems source is present. No newly identified incompatible license was found in the reviewed Rails 6.0.6.1 transitive delta; no automated license-audit adapter is configured, so this remains fixture-scoped review.",
+        "reviewedAt": "2026-09-24T03:14:21.741Z"
+      }
+    }
+  ],
+  "sessionSummary": "",
+  "lockNonce": "b8c3b4ca-6a5a-4523-8382-f438c301d274"
+}
