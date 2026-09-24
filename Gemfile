@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 ruby '2.7.8'
-gem 'rails', '7.0.10'
+gem 'rails', '7.1.6'
 
 gem 'logger', '~> 1.4'
 
@@ -34,7 +34,7 @@ gem 'newrelic_rpm', '~> 9.21'
 # gem 'resque', require: 'resque/server' # Resque web interface
 gem 'slim-rails', '~> 3.6'
 
-gem 'loofah', '~> 2.20.0'
+gem 'loofah', '~> 2.25'
 
 # Assets
 gem 'autoprefixer-rails', '~> 10.4'
@@ -72,7 +72,7 @@ end
 
 group :test do
   gem 'capybara', '~> 3.32.0'
-  gem 'database_cleaner', '~> 1.99'
+  gem 'database_cleaner-active_record', '~> 2.1'
   gem 'email_spec', '~> 2.2'
   gem 'selenium-webdriver', '~> 3.142'
   gem 'simplecov', '~> 0.18.5', require: false

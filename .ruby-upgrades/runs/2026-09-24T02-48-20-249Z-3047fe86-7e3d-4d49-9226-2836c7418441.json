@@ -12,7 +12,7 @@
   "branch": "ruby-upgrade/e2e-3.4",
   "worktreeRoot": "[LOCAL PATH]",
   "startingSha": "ae71ee175ac0ce52cf45d638e87825d3190f1631",
-  "expectedHead": "d3cbd3bc89d72581aeb9d86a5519f24d40534d16",
+  "expectedHead": "8aeac2a4bb8b31bc71c788d02a70866fc72b60d4",
   "control": {
     "stopAfterHop": false
   },
@@ -112,6 +112,10 @@
     "Recorded dependency compatibility and license review for the validated hop.",
     "Discarded the latest validated Rails iteration (6.1.7.10 -> 7.0.10) to re-validate the hop: Discarded the recorded 6.1.7.10 -> 7.0.10 iteration because the stray font-awesome-rails-4.7.0.9.gem fetch artifact was removed from the worktree after final validation, so the commit gate's validation-fingerprint gate correctly refused the checkpoint; re-execute app:update and tests against the clean tree.",
     "Rails 7.0.10 hop re-validated after discarding the stale run; app:update reviewed; bootstrap-sass/font-awesome swap verified on the clean tree; rspec green.",
+    "Recorded dependency compatibility and license review for the validated hop.",
+    "Re-validated Rails 7.0.10 checkpoint committed (recovery from post-validation tree drift).",
+    "Discarded a reviewed app:update result: Discarded the 7.1.6 app:update receipt after replacing database_cleaner 1.99 with database_cleaner-active_record 2.2.2 (Rails 7.1 removed ActiveRecord::SchemaMigration.table_name, which 1.x relied on); re-execute app:update and tests against the final worktree.",
+    "Rails 7.1.6 final bridge hop validated; app:update reviewed; DatabaseCleaner 2.x migration verified; rspec green.",
     "Recorded dependency compatibility and license review for the validated hop."
   ],
   "iterations": [
@@ -623,6 +627,177 @@
         "compatibility": "Focused Rails resolution upgraded the full framework set to 7.0.10. twbs_sass_rails 10.2.0 was removed because it caps at rails < 6.2 and could not co-resolve with Rails 7; replaced with bootstrap-sass 3.4.1 (only sassc >= 2.0 needed; no Rails cap) and font-awesome-rails 4.7.0.9 (railties >= 3.2, < 8.0). Bundler rose from 1.17.3 to 2.4.22 because rubygems.org retired the legacy Dependency API; the compact-index format cannot resolve newly added gems. Final attested Docker RSpec passed on the clean tree.",
         "licenses": "Only the public Rubygems source is present. No newly identified incompatible license was found in the Rails 7.0.10, bootstrap-sass 3.4.1, or font-awesome-rails transitive delta (rainbow/loofah-style MIT, sassc MIT, font-awesome MIT/OFL compliance checked for the icon font); no automated license-audit adapter is configured, so this remains fixture-scoped review.",
         "reviewedAt": "2026-09-24T04:28:03.714Z"
+      },
+      "checkpointSha": "8aeac2a4bb8b31bc71c788d02a70866fc72b60d4"
+    },
+    {
+      "from": "7.0.10",
+      "to": "7.1.6",
+      "files": [
+        "Gemfile",
+        "Gemfile.lock",
+        "config/initializers/new_framework_defaults_7_1.rb",
+        "spec/support/database_cleaner.rb"
+      ],
+      "tests": {
+        "command": "bundle exec rspec",
+        "count": 1,
+        "passed": true,
+        "failures": 0,
+        "durationSeconds": 37.79,
+        "coveragePercent": null,
+        "smoke": "Rails 7.1 boots the Starterapp fixture against PostgreSQL with bootstrap-sass and font-awesome assets compiling, DatabaseCleaner 2.x truncation/transaction strategies run, and the browser-backed Welcome feature still responds."
+      },
+      "fixes": [
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock"
+          ],
+          "explanation": "Upgrade the contiguous Rails framework set to 7.1.6, the final minor of the 7.x bridge."
+        },
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock"
+          ],
+          "explanation": "Loosen the loofah security pin from ~> 2.20.0 to ~> 2.25 because rails-html-sanitizer 1.6+ rides loofah >= 2.21 (resolved loofah 2.25.x)."
+        },
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock",
+            "spec/support/database_cleaner.rb"
+          ],
+          "explanation": "Replace database_cleaner 1.99 with the maintained database_cleaner-active_record 2.2.2: Rails 7.1 removed ActiveRecord::SchemaMigration.table_name, which 1.x used to enumerate truncation targets; require database_cleaner/active_record and adopt the 2.x strategy API (unchanged call sites in the spec support file)."
+        },
+        {
+          "files": [
+            "config/initializers/new_framework_defaults_7_1.rb"
+          ],
+          "explanation": "Accept the Rails 7.1 framework-defaults template added by app:update; all toggles remain commented, preserving current behavior."
+        }
+      ],
+      "citations": [
+        {
+          "title": "Rails upgrade guide",
+          "url": "https://guides.rubyonrails.org/upgrading_ruby_on_rails.html"
+        },
+        {
+          "title": "Ruby on Rails releases",
+          "url": "https://rubyonrails.org/category/releases"
+        }
+      ],
+      "appUpdateReview": {
+        "command": "bin/rails app:update",
+        "reviewedAt": "2026-09-24T04:34:00Z",
+        "outcome": "changes_applied",
+        "files": [
+          "config/initializers/new_framework_defaults_7_1.rb"
+        ],
+        "summary": "Reviewed conflict-skipping Rails 7.1 app:update output; only the missing new_framework_defaults_7_1.rb template was added and all toggles remain commented out.",
+        "receiptId": "b0036522-5586-4f10-8290-23d15d81bef8",
+        "executedAt": "2026-09-24T04:33:27.349Z",
+        "worktree": {
+          "algorithm": "sha256",
+          "headSha": "8aeac2a4bb8b31bc71c788d02a70866fc72b60d4",
+          "diffSha256": "0e26fb8b8943e6205550c79642fab986d420705422776ba4cb4034f1b3f5ef88"
+        }
+      },
+      "validationReceipts": [
+        {
+          "receiptVersion": 1,
+          "id": "b0036522-5586-4f10-8290-23d15d81bef8",
+          "kind": "rails_app_update",
+          "commandId": "rails-app-update",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "bundle",
+            "exec",
+            "ruby",
+            "-e",
+            "require \"./config/application\"; require \"rails/generators\"; require \"rails/generators/rails/app/app_generator\"; generator = Rails::Generators::AppGenerator.new([\"rails\"], { api: !!Rails.application.config.api_only, update: true }, destination_root: Rails.root, behavior: :skip); File.exist?(Rails.root.join(\"config\", \"application.rb\")) ? generator.send(:app_const) : generator.send(:valid_const?); [:create_boot_file, :update_config_files, :create_bin_files, :display_upgrade_guide_info].each { |method| generator.send(method) }"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+            "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+            "imageRef": "ruby:2.7.8",
+            "ruby": "2.7.8"
+          },
+          "startedAt": "2026-09-24T04:33:27.349Z",
+          "finishedAt": "2026-09-24T04:33:36.644Z",
+          "durationMs": 9292,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "63f061286e05d3fa7ea9347aa948a58ad24b71abe200ad8c2f0bf966725e788b",
+            "bytes": 1663
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "8aeac2a4bb8b31bc71c788d02a70866fc72b60d4",
+            "diffSha256": "0e26fb8b8943e6205550c79642fab986d420705422776ba4cb4034f1b3f5ef88"
+          }
+        },
+        {
+          "receiptVersion": 1,
+          "id": "b3b3e7f4-e4f7-4cf0-88b9-6c0a22716bc8",
+          "kind": "test",
+          "commandId": "docker-bundle-rspec",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "bundle",
+            "exec",
+            "rspec"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+            "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+            "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+            "imageRef": "ruby:2.7.8",
+            "ruby": "2.7.8"
+          },
+          "startedAt": "2026-09-24T04:35:45.390Z",
+          "finishedAt": "2026-09-24T04:36:23.183Z",
+          "durationMs": 37790,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "81b20f05b61b904a39437031be15752e31ceb715da6e82f670b651a07a1dfb12",
+            "bytes": 2575
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "8aeac2a4bb8b31bc71c788d02a70866fc72b60d4",
+            "diffSha256": "0e26fb8b8943e6205550c79642fab986d420705422776ba4cb4034f1b3f5ef88"
+          },
+          "testEvidence": {
+            "command": "bundle exec rspec",
+            "count": 1,
+            "passed": true,
+            "failures": 0,
+            "durationSeconds": 37.79,
+            "coveragePercent": null
+          }
+        }
+      ],
+      "status": "complete",
+      "dependencyReview": {
+        "completed": true,
+        "compatibility": "Focused Rails resolution upgraded the full framework set to 7.1.6, completing the Rails bridge pinned by the blocked Ruby run. loofah pin rose from ~> 2.20.0 to ~> 2.25 (rails-html-sanitizer 1.6+ rides loofah >= 2.21). database_cleaner 1.99 replaced by database_cleaner-active_record 2.2.2 + core 2.1.0: Rails 7.1 removed ActiveRecord::SchemaMigration.table_name which the 1.x adapter relied on. No Rails cap or Ruby 2.7 incompatibility found in the resolved set; final attested Docker RSpec passed.",
+        "licenses": "Only the public Rubygems source is present. No newly identified incompatible license was found in the Rails 7.1.6, loofah 2.25.x, or database_cleaner-active_record/core 2.x delta (MIT throughout; database_cleaner-core MIT, database_cleaner-active_record MIT); no automated license-audit adapter is configured, so this remains fixture-scoped review.",
+        "reviewedAt": "2026-09-24T04:36:32.807Z"
       }
     }
   ],
@@ -804,6 +979,50 @@
       },
       "reason": "Discarded the pending 7.0.10 app:update receipt because font-awesome moved from an SCSS @import to a Sprockets require directive in application.css, changing the worktree after app:update ran; re-execute app:update and tests against the final state.",
       "discardedAt": "2026-09-24T03:51:47.112Z"
+    },
+    {
+      "receipt": {
+        "receiptVersion": 1,
+        "id": "8b58f71c-aada-479b-ab24-c370886eb86e",
+        "kind": "rails_app_update",
+        "commandId": "rails-app-update",
+        "argv": [
+          "docker",
+          "exec",
+          "--env",
+          "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+          "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+          "bundle",
+          "exec",
+          "ruby",
+          "-e",
+          "require \"./config/application\"; require \"rails/generators\"; require \"rails/generators/rails/app/app_generator\"; generator = Rails::Generators::AppGenerator.new([\"rails\"], { api: !!Rails.application.config.api_only, update: true }, destination_root: Rails.root, behavior: :skip); File.exist?(Rails.root.join(\"config\", \"application.rb\")) ? generator.send(:app_const) : generator.send(:valid_const?); [:create_boot_file, :update_config_files, :create_bin_files, :display_upgrade_guide_info].each { |method| generator.send(method) }"
+        ],
+        "environment": {
+          "type": "docker",
+          "name": "ruby-upgrader-41f40bc2-9321-483a-afc7-3e1266a5e99d-app",
+          "id": "63f10b98edb4d691bb958c0b9a73854cd34cb2afa8d6afa5196c066c49fb03ad",
+          "imageId": "sha256:2347de892e419c7160fc21dec721d5952736909f8c3fbb7f84cb4a07aaf9ce7d",
+          "imageRef": "ruby:2.7.8",
+          "ruby": "2.7.8"
+        },
+        "startedAt": "2026-09-24T04:29:58.779Z",
+        "finishedAt": "2026-09-24T04:30:07.958Z",
+        "durationMs": 9166,
+        "exitCode": 0,
+        "timedOut": false,
+        "output": {
+          "redactedSha256": "f9369784b7ad92e66d6aba225f6a2f64cec72c03e6e92994d3a03c0c620c23f8",
+          "bytes": 1663
+        },
+        "worktree": {
+          "algorithm": "sha256",
+          "headSha": "8aeac2a4bb8b31bc71c788d02a70866fc72b60d4",
+          "diffSha256": "5dcab13798099af7f44e0a75a8022d51383e9d0d87cf105c03c092e608c5ec12"
+        }
+      },
+      "reason": "Discarded the 7.1.6 app:update receipt after replacing database_cleaner 1.99 with database_cleaner-active_record 2.2.2 (Rails 7.1 removed ActiveRecord::SchemaMigration.table_name, which 1.x relied on); re-execute app:update and tests against the final worktree.",
+      "discardedAt": "2026-09-24T04:33:26.230Z"
     }
   ],
   "discardedIterations": [
