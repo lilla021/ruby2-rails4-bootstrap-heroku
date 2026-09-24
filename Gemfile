@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.6.10'
+ruby '2.7.8'
 gem 'rails', '5.2.8.1'
 
 gem 'crack', '0.4.5'
