@@ -125,3 +125,12 @@ bower.json
 
 # Ignore RSpec state
 /spec/examples.txt
+
+# Local OpenCode/session working notes; never commit these.
+LEARNING_PATH.md
+LOCAL_TEST_PLAN.md
+RESTART_HANDOFF.md
+TODO.md
+
+# Per-worktree runtime selection is local state, not durable evidence.
+/.ruby-upgrades/runtime.json
