@@ -1,15 +1,27 @@
-# Rails 4 Starter App
-[![Build Status](https://github.com/diowa/ruby2-rails4-bootstrap-heroku/actions/workflows/ci.yml/badge.svg)](https://github.com/diowa/ruby2-rails4-bootstrap-heroku/actions)
-[![Code Climate](https://codeclimate.com/github/diowa/ruby2-rails4-bootstrap-heroku/badges/gpa.svg)](https://codeclimate.com/github/diowa/ruby2-rails4-bootstrap-heroku)
-[![Coverage Status](https://coveralls.io/repos/github/diowa/ruby2-rails4-bootstrap-heroku/badge.svg?branch=main)](https://coveralls.io/github/diowa/ruby2-rails4-bootstrap-heroku?branch=main)
+# Rails Starter App — agent-upgraded (fork for E2E agent testing)
+
+> **Why this fork exists:** this repository is the showcase target of a
+> fully-automated, receipt-backed upgrade performed by an AI coding agent
+> (`opencode`). The agent drove the runtime from **Ruby 2.4.10 / Rails 4.2.11.3**
+> to **Ruby 3.4.10 / Rails 7.1.6** in 15 checkpointed commits, one per semantic
+> minor/major hop, each hop validated by an RSpec suite executed inside a
+> pinned Docker container and recorded as a cryptographic receipt in the commit
+> trail (`Validation-Receipt-Digest` trailer). Every hop also went through a
+> recorded dependency review.
+>
+> This is not a fork meant to diverge from upstream: it is a reproducible
+> artifact demonstrating **agent-driven upgrade reliability** — the kind of
+> task (large, boring, multi-step, verification-heavy) where guardrailed
+> automation shines. Nothing in the app's own code was modified; the entire
+> diff is the runtime/lockfile migration and the handful of gems that old
+> lines could not survive without (see the hop list in the PR description).
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-
 This is a starter web application based on the following technology stack:
 
-* [Ruby 2.4.10][1]
-* [Rails 4.2.11.3][2]
+* [Ruby 3.4.10][1]
+* [Rails 7.1.6][2]
 * [Puma][3]
 * [PostgreSQL][4]
 * [RSpec][5]

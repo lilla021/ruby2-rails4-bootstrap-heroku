@@ -37,8 +37,8 @@ linters:
     enabled: true
     exclude:
       - app/assets/stylesheets/application.scss
-      - app/assets/stylesheets/twbs-variables.scss
-      - app/assets/stylesheets/twbs.scss
+      - app/assets/stylesheets/bootstrap-variables.scss
+      - app/assets/stylesheets/bootstrap-manifest.scss
     style: silent
 
   DebugStatement:

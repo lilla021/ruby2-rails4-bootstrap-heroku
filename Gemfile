@@ -2,8 +2,10 @@
 
 source 'https://rubygems.org'
 
-ruby '2.4.10'
-gem 'rails', '4.2.11.3'
+ruby '3.4.10'
+gem 'rails', '7.1.6'
+
+gem 'logger', '~> 1.4'
 
 gem 'crack', '0.4.5'
 
@@ -14,7 +16,7 @@ gem 'puma', '~> 6.4'
 # gem 'rabl'
 
 # ORM
-gem 'pg', '~> 0.21.0'
+gem 'pg', '~> 1.5.0'
 
 # Pagination
 # gem 'kaminari'
@@ -32,25 +34,27 @@ gem 'newrelic_rpm', '~> 9.21'
 # gem 'resque', require: 'resque/server' # Resque web interface
 gem 'slim-rails', '~> 3.6'
 
-gem 'loofah', '~> 2.20.0'
+gem 'loofah', '~> 2.25'
 
 # Assets
 gem 'autoprefixer-rails', '~> 10.4'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'coffee-rails', '~> 4.2'
+gem 'font-awesome-rails', '~> 4.7'
 gem 'i18n-js', '~> 3.9'
 gem 'jquery-rails', '~> 4.5'
 gem 'sassc-rails', '~> 2.1'
 gem 'slim_assets', '~> 0.0.3'
 gem 'turbolinks', '~> 5.2'
-gem 'twbs_sass_rails', '~> 10.2'
 gem 'uglifier', '~> 4.2'
 
 group :development, :test do
   gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', '~> 5.2'
   gem 'faker', '~> 2.2.1'
-  gem 'pry', '~> 0.13.1'
-  gem 'pry-byebug', '~> 3.9'
+  gem 'observer', '~> 0.1'
+  gem 'pry', '~> 0.14.2'
+  gem 'pry-byebug', '~> 3.10'
   gem 'pry-rails', '~> 0.3.9'
   gem 'rspec-rails', '~> 4.1'
   gem 'rubocop', '~> 1.12', require: false
@@ -69,8 +73,9 @@ end
 
 group :test do
   gem 'capybara', '~> 3.32.0'
-  gem 'database_cleaner', '~> 1.99'
+  gem 'database_cleaner-active_record', '~> 2.1'
   gem 'email_spec', '~> 2.2'
+  gem 'matrix', '~> 0.4'
   gem 'selenium-webdriver', '~> 3.142'
   gem 'simplecov', '~> 0.18.5', require: false
   gem 'simplecov-lcov', '~> 0.8.0', require: false

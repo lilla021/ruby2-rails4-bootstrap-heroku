@@ -2,6 +2,11 @@
 
 require File.expand_path('boot', __dir__)
 
+# ActiveSupport 6.0 requires active_support/logger_silence before "logger",
+# and logger_thread_safe_level evaluates Logger::Severity at load time.
+# Rails 7.1 made this dependency permanent; declare it explicitly here.
+require 'logger'
+
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -23,6 +28,5 @@ module Starterapp
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
   end
 end

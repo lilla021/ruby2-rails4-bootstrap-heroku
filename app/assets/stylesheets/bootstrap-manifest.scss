@@ -1,0 +1,21 @@
+/* Use bootstrap-variables to define new variables and override Bootstrap defaults.
+ * Import "bootstrap-variables" instead of "bootstrap/variables"
+ * in each new stylesheet.
+ * Note: this manifest is named bootstrap-manifest (not bootstrap) so the Sass
+ * @import "bootstrap" resolves to the bootstrap-sass gem, not to this file.
+ */
+@import "bootstrap-variables";
+
+/* Start editing below this line */
+@import "bootstrap";
+
+/* Bootstrap Theme */
+//@import "bootstrap/theme";
+
+/* Glyphs */
+//@import "bootstrap/glyphicons";
+
+/* Standard Rails form errors */
+.field_with_errors {
+  @extend .has-error;
+}

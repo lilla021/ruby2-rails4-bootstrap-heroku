@@ -19,7 +19,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1.321.0
       with:
-        ruby-version: '2.4.10'
+        ruby-version: '3.4.10'
         bundler-cache: true
     - name: Run lints
       run: bundle exec rake lint

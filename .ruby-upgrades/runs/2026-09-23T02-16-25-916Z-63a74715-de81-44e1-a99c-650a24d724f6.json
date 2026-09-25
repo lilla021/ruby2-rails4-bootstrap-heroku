@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 2,
+  "validationReceiptsRequired": true,
+  "runId": "d51bc8ac-c06c-40fb-9f2d-dfb69dddeb15",
+  "title": "Ruby migration to 3.4.10",
+  "status": "blocked",
+  "phase": "blocked",
+  "startedAt": "2026-09-23T02:16:25.937Z",
+  "targetRuby": "3.4.10",
+  "targetPinnedAt": "2026-09-23T02:16:25.937Z",
+  "branch": "ruby-upgrade/e2e-3.4",
+  "worktreeRoot": "[LOCAL PATH]",
+  "startingSha": "bad95e2be88687f5d185c29a2361526fa05b8f54",
+  "expectedHead": "e8e1ce821033336c7ac68dc9082f595ff43453e5",
+  "control": {
+    "stopAfterHop": false
+  },
+  "inventory": {
+    "root": "[LOCAL PATH]",
+    "supported": true,
+    "framework": "rails",
+    "testFramework": "rspec",
+    "rubyDeclarations": [
+      {
+        "file": "Gemfile",
+        "value": "2.4.10"
+      }
+    ],
+    "rails": {
+      "declaredVersion": "4.2.11",
+      "resolvedVersion": "4.2.11.3"
+    },
+    "recommendedCommands": [
+      "bundle exec rspec"
+    ],
+    "ci": [
+      ".github/workflows"
+    ],
+    "deploy": [
+      "Procfile",
+      "app.json"
+    ],
+    "requiresDecision": false
+  },
+  "supplyChain": {
+    "lockfile": "Gemfile.lock",
+    "sources": [
+      "https://rubygems.org/"
+    ],
+    "declaredSources": [
+      "https://rubygems.org"
+    ],
+    "privateSources": [],
+    "dependencyCount": 118,
+    "vulnerabilityStatus": "requires_bundle_audit_review",
+    "licenseStatus": "requires_bundle_license_review"
+  },
+  "gitCapabilities": {
+    "supported": true,
+    "shallow": false,
+    "sparseCheckout": false,
+    "submodules": false,
+    "lfsConfigured": false,
+    "recommendation": "Standard Git topology."
+  },
+  "research": {
+    "ladder": [
+      "2.4.10",
+      "2.5.9",
+      "2.6.10",
+      "2.7.8",
+      "3.0.7",
+      "3.1.7",
+      "3.2.11",
+      "3.3.12",
+      "3.4.10"
+    ],
+    "citations": [
+      {
+        "title": "Ruby releases",
+        "url": "https://www.ruby-lang.org/en/downloads/releases/"
+      },
+      {
+        "title": "Ruby 3.4.0 release notes",
+        "url": "https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/"
+      },
+      {
+        "title": "Ruby lifecycle cross-check",
+        "url": "https://endoflife.date/ruby"
+      },
+      {
+        "title": "Rails 4.2 upgrade guide",
+        "url": "https://guides.rubyonrails.org/v4.2.11.3/upgrading_ruby_on_rails.html"
+      }
+    ]
+  },
+  "requiredRisks": [],
+  "riskDecisions": [],
+  "frameworkBridge": {
+    "status": "approved",
+    "rubyFrom": "2.6.10",
+    "rubyTo": "2.7.8",
+    "railsFrom": "4.2.11.3",
+    "railsTo": "5.2.8.1",
+    "rationale": "Rails 4.2.11.3 calls BigDecimal.new, removed in Ruby 2.7; Rails 5.2 removes that boot-time incompatibility and must be reached through reviewed minor-series Rails hops.",
+    "citations": [
+      {
+        "title": "Rails upgrade guide",
+        "url": "https://guides.rubyonrails.org/upgrading_ruby_on_rails.html"
+      },
+      {
+        "title": "Rails 5.2.8.1 gemspec",
+        "url": "https://raw.githubusercontent.com/rails/rails/v5.2.8.1/rails.gemspec"
+      }
+    ],
+    "recordedAt": "2026-09-23T04:47:03.668Z"
+  },
+  "summary": [
+    "Run initialized; official-source research and compatibility ladder pending.",
+    "Initial clean-tree gate: .ruby-upgrades/ is untracked after durable-run initialization. User review is required before first runtime preparation and Ruby 2.4.10 to 2.5.9 iteration.",
+    "Ruby 2.5.9 Docker receipt passed; awaiting user checkpoint review.",
+    "Paused after receipt-backed first-hop validation; no checkpoint created.",
+    "Local receipt-backed Ruby 2.5.9 checkpoint created; no push performed.",
+    "Ruby 2.6.10 Docker receipt passed; awaiting checkpoint review.",
+    "Paused after receipt-backed Ruby 2.6.10 validation; no second checkpoint created.",
+    "Local receipt-backed Ruby 2.6.10 checkpoint created; no push performed.",
+    "Ruby 2.7.8 preparation blocked: Rails 4.2.11.3 calls removed BigDecimal.new during boot. Reverted unvalidated runtime declarations to checkpointed Ruby 2.6.10; Rails bridge decision required.",
+    "User approved a separately scoped Rails 4.2.11.3 → 5.2.8.1 bridge before Ruby 2.6.10 → 2.7.8.",
+    "Ruby 2.7.8 blocked by Rails 4.2 BigDecimal.new incompatibility; approved Rails 5.2 bridge will run separately."
+  ],
+  "iterations": [
+    {
+      "from": "2.4.10",
+      "to": "2.5.9",
+      "files": [
+        "Gemfile",
+        "Gemfile.lock"
+      ],
+      "dependencyReview": {
+        "completed": true,
+        "compatibility": "Bundler retained the locked dependency graph; only Ruby version metadata changed.",
+        "licenses": "No dependency versions changed; full audit and license review remain release requirements."
+      },
+      "fixes": [
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock"
+          ],
+          "explanation": "Advance the declared Ruby runtime one published series from 2.4.10 to 2.5.9. The lockfile records the exact target interpreter while retaining Bundler 1.17.3 and the existing dependency graph."
+        }
+      ],
+      "citations": [
+        {
+          "title": "Ruby releases",
+          "url": "https://www.ruby-lang.org/en/downloads/releases/"
+        }
+      ],
+      "tests": {
+        "command": "bundle exec rspec",
+        "count": 1,
+        "passed": true,
+        "failures": 0,
+        "durationSeconds": 33.977,
+        "coveragePercent": null,
+        "smoke": "Existing browser-backed Welcome feature spec exercised application boot and page rendering."
+      },
+      "validationReceipts": [
+        {
+          "receiptVersion": 1,
+          "id": "8fbc107c-ed9f-4324-800d-10856a57a114",
+          "kind": "test",
+          "commandId": "docker-bundle-rspec",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-d51bc8ac-c06c-40fb-9f2d-dfb69dddeb15-app",
+            "bundle",
+            "exec",
+            "rspec"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-d51bc8ac-c06c-40fb-9f2d-dfb69dddeb15-app",
+            "id": "b80ea4d05ae789bf3929ea593b7449095a58df8bd310ad7a5ce776b546439416",
+            "imageId": "sha256:ecc3e4f5da13d881a415c9692bb52d2b85b090f38f4ad99ae94f932b3598444b",
+            "imageRef": "ruby:2.5.9",
+            "ruby": "2.5.9"
+          },
+          "startedAt": "2026-09-23T03:32:42.460Z",
+          "finishedAt": "2026-09-23T03:33:16.440Z",
+          "durationMs": 33977,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "7377bab5fb106b6c2fb5069e9dba35a3330a11fa1a4f2a3f60c54733c481aeaf",
+            "bytes": 1031
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "bad95e2be88687f5d185c29a2361526fa05b8f54",
+            "diffSha256": "1f2d8c27dce4994cffa4b02419e7933b8605e53bac5d6cdec59d9cf90ebef12d"
+          },
+          "testEvidence": {
+            "command": "bundle exec rspec",
+            "count": 1,
+            "passed": true,
+            "failures": 0,
+            "durationSeconds": 33.977,
+            "coveragePercent": null
+          }
+        }
+      ],
+      "status": "complete",
+      "checkpointSha": "e0fb0d2f7494d10cf22a73512efa1b7584bf89d0"
+    },
+    {
+      "from": "2.5.9",
+      "to": "2.6.10",
+      "files": [
+        "Gemfile",
+        "Gemfile.lock"
+      ],
+      "dependencyReview": {
+        "completed": true,
+        "compatibility": "Bundler retained the locked dependency graph; only Ruby version metadata changed.",
+        "licenses": "No dependency versions changed; full audit and license review remain release requirements."
+      },
+      "fixes": [
+        {
+          "files": [
+            "Gemfile",
+            "Gemfile.lock"
+          ],
+          "explanation": "Advance the declared Ruby runtime one published series from 2.5.9 to 2.6.10. The lockfile records the exact target interpreter while retaining Bundler 1.17.3 and the existing dependency graph."
+        }
+      ],
+      "citations": [
+        {
+          "title": "Ruby releases",
+          "url": "https://www.ruby-lang.org/en/downloads/releases/"
+        }
+      ],
+      "tests": {
+        "command": "bundle exec rspec",
+        "count": 1,
+        "passed": true,
+        "failures": 0,
+        "durationSeconds": 38.87,
+        "coveragePercent": null,
+        "smoke": "Existing browser-backed Welcome feature spec exercised application boot and page rendering."
+      },
+      "validationReceipts": [
+        {
+          "receiptVersion": 1,
+          "id": "a34b712a-beba-40d5-ac14-0ced29f24221",
+          "kind": "test",
+          "commandId": "docker-bundle-rspec",
+          "argv": [
+            "docker",
+            "exec",
+            "--env",
+            "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true",
+            "ruby-upgrader-d51bc8ac-c06c-40fb-9f2d-dfb69dddeb15-app",
+            "bundle",
+            "exec",
+            "rspec"
+          ],
+          "environment": {
+            "type": "docker",
+            "name": "ruby-upgrader-d51bc8ac-c06c-40fb-9f2d-dfb69dddeb15-app",
+            "id": "b0ff313f744157202e71eab2811323eea7259be42be055bbf79b1d956313fe54",
+            "imageId": "sha256:a79c8ddb7f3d3748427e2d3a45dcae6d42f1d80d9ae3b98959b3a27b220bf434",
+            "imageRef": "ruby:2.6.10",
+            "ruby": "2.6.10"
+          },
+          "startedAt": "2026-09-23T03:59:27.608Z",
+          "finishedAt": "2026-09-23T04:00:06.488Z",
+          "durationMs": 38870,
+          "exitCode": 0,
+          "timedOut": false,
+          "output": {
+            "redactedSha256": "f79604368abd773589f733c5a408f73a4eab37ddf99c93a81dd79ebc1ee78db5",
+            "bytes": 1378
+          },
+          "worktree": {
+            "algorithm": "sha256",
+            "headSha": "e0fb0d2f7494d10cf22a73512efa1b7584bf89d0",
+            "diffSha256": "2c2f9b3a8c0609c4f0b3562bbfd91826c699ab9c3724fa5a5b7fc9c7f95a75dc"
+          },
+          "testEvidence": {
+            "command": "bundle exec rspec",
+            "count": 1,
+            "passed": true,
+            "failures": 0,
+            "durationSeconds": 38.87,
+            "coveragePercent": null
+          }
+        }
+      ],
+      "status": "complete",
+      "checkpointSha": "e8e1ce821033336c7ac68dc9082f595ff43453e5"
+    }
+  ],
+  "sessionSummary": "",
+  "lockNonce": "58fb727e-3a45-410a-aa38-400093f2c953"
+}

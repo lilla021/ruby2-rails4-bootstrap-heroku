@@ -11,7 +11,8 @@
  * file per style scope.
  *
  *= require_self
- *= stub twbs-variables
- *= require twbs
+ *= stub bootstrap-variables
+ *= require bootstrap-manifest
+ *= require font-awesome
  *= require_tree .
  */

@@ -15,7 +15,7 @@
 #= require turbolinks
 
 # BOOTSTRAP
-#= require twbs/bootstrap
+#= require bootstrap-sprockets
 
 # I18n
 #= require i18n
